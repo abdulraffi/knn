@@ -39,6 +39,8 @@ $api->version('v1', function (Router $api) {
         $api->get('sum', 'App\\Api\\V1\\Controllers\\PembobotanController@sumidf');
         $api->get('data', 'App\\Api\\V1\\Controllers\\PembobotanController@getdata');
         $api->get('datatest', 'App\\Api\\V1\\Controllers\\KNNController@knn');
+        $api->get('logistic', 'App\\Api\\V1\\Controllers\\KNNController@logistic');
+        $api->get('report', 'App\\Api\\V1\\Controllers\\KNNController@matrix');
     });
 
     $api->get('hello', function() {

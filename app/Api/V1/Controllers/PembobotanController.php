@@ -10,6 +10,7 @@ namespace App\Api\V1\Controllers;
 
 
 use App\Data;
+use App\DataLatih;
 use App\Http\Controllers\Controller;
 use App\Pembobotan;
 
@@ -20,7 +21,13 @@ class PembobotanController extends Controller
 
         foreach ($data as $datum) {
             $sum = explode(' ', $datum->TF_IDF);
-            $user = Data::find($datum->id);
+
+            $user = Data::where('akun',$datum->akun)->first();
+
+            if(!$user){
+                $user = DataLatih::where('akun',$datum->akun)->first();
+            }
+
             $user->TF_IDF = $this->sumArray($sum);
             $user->save();
         }
