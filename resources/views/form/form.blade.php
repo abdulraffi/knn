@@ -274,7 +274,7 @@
             dataType: 'json',
             url: APP_URL + "/api/knn/datatest",
             data: {
-                "nilai_k": $("#nilai_k").val(),
+                // "nilai_k": $("#nilai_k").val(),
 
                 "follower": $("#total_follower").is(':checked'),
                 "following": $("#total_following").is(':checked'),

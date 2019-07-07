@@ -179,6 +179,9 @@ class KNNController extends Controller
         $datatest = [];
         $labeltest = [];
 
+        $setting = new SettingTest($request->all());
+        $setting->save();
+
         foreach ($user as $item) {
 
             $data = [];
