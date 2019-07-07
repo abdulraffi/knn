@@ -13,6 +13,9 @@ namespace App\Api\V1\Controllers;
 use App\Data;
 use App\DataLatih;
 use App\Http\Controllers\Controller;
+use App\Result;
+use App\SettingTest;
+use Illuminate\Http\Request;
 use Phpml\Classification\KNearestNeighbors;
 use Phpml\Classification\Linear\LogisticRegression;
 use Phpml\Metric\Accuracy;
@@ -21,15 +24,27 @@ use Phpml\Metric\ClassificationReport;
 
 class KNNController extends Controller
 {
-    public function knn(){
 
+<<<<<<< HEAD
         $classifier = new KNearestNeighbors(3);
+=======
 
-        $user = Data::get();
+    public function knn(Request $request)
+    {
+
+        $classifier = new KNearestNeighbors($request->nilai_k);
+//        $logistic = new LogisticRegression();
+>>>>>>> 2f44bde8c78d2d1e285f2472c2c5c82bac85b9a5
+
+        $datalatih = Data::get();
+        $datauji = DataLatih::get();
+
+        $hasil = [];
 
         $datatest = [];
         $labeltest = [];
 
+<<<<<<< HEAD
         foreach ($user as $item) {
             $data = [
                 $item->total_follower,
@@ -48,6 +63,61 @@ class KNNController extends Controller
                 $item->rata2_karakter,
                 $item->TF_IDF,
             ];
+=======
+        $setting = new SettingTest($request->all());
+        $setting->save();
+
+        foreach ($datalatih as $item) {
+
+            $data = [];
+
+            if ($request->follower) {
+                $data[] = $item->total_follower;
+            }
+            if ($request->following) {
+                $data[] = $item->total_following;
+            }
+            if ($request->media_url) {
+                $data[] = $item->total_media_url;
+            }
+            if ($request->url) {
+                $data[] = $item->total_url;
+            }
+            if ($request->mention) {
+                $data[] = $item->total_mention;
+            }
+            if ($request->RT) {
+                $data[] = $item->total_RT;
+            }
+            if ($request->hashtag) {
+                $data[] = $item->total_hashtag;
+            }
+            if ($request->huruf_besar) {
+                $data[] = $item->total_huruf_besar;
+            }
+            if ($request->tanda_baca) {
+                $data[] = $item->total_tanda_baca;
+            }
+            if ($request->emoji) {
+                $data[] = $item->total_emoji;
+            }
+            if ($request->kata) {
+                $data[] = $item->total_kata;
+            }
+            if ($request->rata2_kata) {
+                $data[] = $item->rata2_kata;
+            }
+            if ($request->karakter) {
+                $data[] = $item->total_karakter;
+            }
+            if ($request->rata2_karakter) {
+                $data[] = $item->rata2_karakter;
+            }
+            if ($request->TF_IDF) {
+                $data[] = $item->TF_IDF;
+            }
+
+>>>>>>> 2f44bde8c78d2d1e285f2472c2c5c82bac85b9a5
             $label = $item->kelas_asli;
             $datatest[] = $data;
             $labeltest[] = $label;
@@ -55,11 +125,9 @@ class KNNController extends Controller
 
 
         $classifier->train($datatest, $labeltest);
-        $datauji = DataLatih::get();
-
-        $hasil = [];
 
         foreach ($datauji as $item) {
+<<<<<<< HEAD
             $data = [
                 $item->total_follower,
                 $item->total_following,
@@ -77,6 +145,56 @@ class KNNController extends Controller
                 $item->rata2_karakter,
                 $item->TF_IDF,
             ];
+=======
+            $data = [];
+
+            if ($request->follower) {
+                $data[] = $item->total_follower;
+            }
+            if ($request->following) {
+                $data[] = $item->total_following;
+            }
+            if ($request->media_url) {
+                $data[] = $item->total_media_url;
+            }
+            if ($request->url) {
+                $data[] = $item->total_url;
+            }
+            if ($request->mention) {
+                $data[] = $item->total_mention;
+            }
+            if ($request->RT) {
+                $data[] = $item->total_RT;
+            }
+            if ($request->hashtag) {
+                $data[] = $item->total_hashtag;
+            }
+            if ($request->huruf_besar) {
+                $data[] = $item->total_huruf_besar;
+            }
+            if ($request->tanda_baca) {
+                $data[] = $item->total_tanda_baca;
+            }
+            if ($request->emoji) {
+                $data[] = $item->total_emoji;
+            }
+            if ($request->kata) {
+                $data[] = $item->total_kata;
+            }
+            if ($request->rata2_kata) {
+                $data[] = $item->rata2_kata;
+            }
+            if ($request->karakter) {
+                $data[] = $item->total_karakter;
+            }
+            if ($request->rata2_karakter) {
+                $data[] = $item->rata2_karakter;
+            }
+            if ($request->TF_IDF) {
+                $data[] = $item->TF_IDF;
+            }
+
+>>>>>>> 2f44bde8c78d2d1e285f2472c2c5c82bac85b9a5
             $predict = $classifier->predict([$data]);
             $item->kelas_prediksi = $predict[0];
             $hasil[] = $predict;
@@ -96,34 +214,68 @@ class KNNController extends Controller
 
     }
 
-    public  function logistic(){
+    public function logistic(Request $request)
+    {
 
 //        $classifier = new KNearestNeighbors(7);
         $logistic = new LogisticRegression();
 
         $user = Data::get();
+        $datauji = DataLatih::get();
 
         $datatest = [];
         $labeltest = [];
 
         foreach ($user as $item) {
-            $data = [
-                $item->total_follower,
-                $item->total_following,
-                $item->total_media_url,
-                $item->total_url,
-                $item->total_mention,
-                $item->total_RT,
-                $item->total_hashtag,
-                $item->total_huruf_besar,
-                $item->total_tanda_baca,
-                $item->total_emoji,
-                $item->total_kata,
-                $item->rata2_kata,
-                $item->total_karakter,
-                $item->rata2_karakter,
-                $item->TF_IDF,
-            ];
+
+            $data = [];
+
+            if ($request->follower) {
+                $data[] = $item->total_follower;
+            }
+            if ($request->following) {
+                $data[] = $item->total_following;
+            }
+            if ($request->media_url) {
+                $data[] = $item->total_media_url;
+            }
+            if ($request->url) {
+                $data[] = $item->total_url;
+            }
+            if ($request->mention) {
+                $data[] = $item->total_mention;
+            }
+            if ($request->RT) {
+                $data[] = $item->total_RT;
+            }
+            if ($request->hashtag) {
+                $data[] = $item->total_hashtag;
+            }
+            if ($request->huruf_besar) {
+                $data[] = $item->total_huruf_besar;
+            }
+            if ($request->tanda_baca) {
+                $data[] = $item->total_tanda_baca;
+            }
+            if ($request->emoji) {
+                $data[] = $item->total_emoji;
+            }
+            if ($request->kata) {
+                $data[] = $item->total_kata;
+            }
+            if ($request->rata2_kata) {
+                $data[] = $item->rata2_kata;
+            }
+            if ($request->karakter) {
+                $data[] = $item->total_karakter;
+            }
+            if ($request->rata2_karakter) {
+                $data[] = $item->rata2_karakter;
+            }
+            if ($request->TF_IDF) {
+                $data[] = $item->TF_IDF;
+            }
+
             $label = $item->kelas_asli;
             $datatest[] = $data;
             $labeltest[] = $label;
@@ -145,37 +297,63 @@ class KNNController extends Controller
 //        $datatest[] = $test2;
 //        $datatest[] = $test3;
 
-        $logistic->train($datatest,$labeltest);
-        $datauji = DataLatih::get();
-
-        $hasil = [];
+        $logistic->train($datatest, $labeltest);
 
         foreach ($datauji as $item) {
-            $data = [
-                $item->total_follower,
-                $item->total_following,
-                $item->total_media_url,
-                $item->total_url,
-                $item->total_mention,
-                $item->total_RT,
-                $item->total_hashtag,
-                $item->total_huruf_besar,
-                $item->total_tanda_baca,
-                $item->total_emoji,
-                $item->total_kata,
-                $item->rata2_kata,
-                $item->total_karakter,
-                $item->rata2_karakter,
-                $item->TF_IDF,
-            ];
+            $data = [];
+
+            if ($request->follower) {
+                $data[] = $item->total_follower;
+            }
+            if ($request->following) {
+                $data[] = $item->total_following;
+            }
+            if ($request->media_url) {
+                $data[] = $item->total_media_url;
+            }
+            if ($request->url) {
+                $data[] = $item->total_url;
+            }
+            if ($request->mention) {
+                $data[] = $item->total_mention;
+            }
+            if ($request->RT) {
+                $data[] = $item->total_RT;
+            }
+            if ($request->hashtag) {
+                $data[] = $item->total_hashtag;
+            }
+            if ($request->huruf_besar) {
+                $data[] = $item->total_huruf_besar;
+            }
+            if ($request->tanda_baca) {
+                $data[] = $item->total_tanda_baca;
+            }
+            if ($request->emoji) {
+                $data[] = $item->total_emoji;
+            }
+            if ($request->kata) {
+                $data[] = $item->total_kata;
+            }
+            if ($request->rata2_kata) {
+                $data[] = $item->rata2_kata;
+            }
+            if ($request->karakter) {
+                $data[] = $item->total_karakter;
+            }
+            if ($request->rata2_karakter) {
+                $data[] = $item->rata2_karakter;
+            }
+            if ($request->TF_IDF) {
+                $data[] = $item->TF_IDF;
+            }
+
             $predict = $logistic->predict([$data]);
             $item->kelas_prediksi = $predict[0];
             $hasil[] = $predict;
             $item->save();
 
         }
-
-
 
 
 //        $predict_logis = $logistic->predict([500, 100, 70000]);
@@ -186,7 +364,8 @@ class KNNController extends Controller
             ]);
     }
 
-    public function matrix(){
+    public function matrix()
+    {
 
         $user = DataLatih::get();
 
@@ -202,12 +381,45 @@ class KNNController extends Controller
 
         $accuracy = Accuracy::score($actualLabels, $predictedLabels);
 
+        $pre = $report->getPrecision();
+        $re = $report->getRecall();
+
+        $apre = [];
+        foreach ($pre as $item) {
+            $apre[] = $item;
+        }
+
+        $are = [];
+        foreach ($re as $item) {
+            $are[] = $item;
+        }
+
+//        $data = array_fill_keys(array('re_a'),'');
+
+        $data = array();
+        $data['re_a'] = $are[0];
+        $data['re_c'] = $are[1];
+        $data['re_e'] = $are[2];
+        $data['re_n'] = $are[3];
+        $data['re_o']= $are[4];
+
+        $data['pre_a'] = $apre[0];
+        $data['pre_c']= $apre[1];
+        $data['pre_e']= $apre[2];
+        $data['pre_n']= $apre[3];
+        $data['pre_o']= $apre[4];
+
+        $data['akurasi'] = $accuracy;
+
+        $hasil = new Result($data);
+        $hasil->save();
+
         return response()
             ->json([
-                'precision' => $report->getPrecision(),
-                'recall' => $report->getRecall(),
-                'akurasi' => $accuracy
+                'status' => $are[0]
             ]);
+
+
     }
 
 }
