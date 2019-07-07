@@ -24,17 +24,11 @@ use Phpml\Metric\ClassificationReport;
 
 class KNNController extends Controller
 {
-
-<<<<<<< HEAD
-        $classifier = new KNearestNeighbors(3);
-=======
-
     public function knn(Request $request)
     {
 
         $classifier = new KNearestNeighbors($request->nilai_k);
 //        $logistic = new LogisticRegression();
->>>>>>> 2f44bde8c78d2d1e285f2472c2c5c82bac85b9a5
 
         $datalatih = Data::get();
         $datauji = DataLatih::get();
@@ -44,26 +38,6 @@ class KNNController extends Controller
         $datatest = [];
         $labeltest = [];
 
-<<<<<<< HEAD
-        foreach ($user as $item) {
-            $data = [
-                $item->total_follower,
-                $item->total_following,
-                // $item->total_media_url,
-                // $item->total_url,
-                // $item->total_mention,
-                // $item->total_RT,
-                // $item->total_hashtag,
-                // $item->total_huruf_besar,
-                // $item->total_tanda_baca,
-                // $item->total_emoji,
-                $item->total_kata,
-                $item->rata2_kata,
-                $item->total_karakter,
-                $item->rata2_karakter,
-                $item->TF_IDF,
-            ];
-=======
         $setting = new SettingTest($request->all());
         $setting->save();
 
@@ -117,7 +91,6 @@ class KNNController extends Controller
                 $data[] = $item->TF_IDF;
             }
 
->>>>>>> 2f44bde8c78d2d1e285f2472c2c5c82bac85b9a5
             $label = $item->kelas_asli;
             $datatest[] = $data;
             $labeltest[] = $label;
@@ -127,25 +100,6 @@ class KNNController extends Controller
         $classifier->train($datatest, $labeltest);
 
         foreach ($datauji as $item) {
-<<<<<<< HEAD
-            $data = [
-                $item->total_follower,
-                $item->total_following,
-                // $item->total_media_url,
-                // $item->total_url,
-                // $item->total_mention,
-                // $item->total_RT,
-                // $item->total_hashtag,
-                // $item->total_huruf_besar,
-                // $item->total_tanda_baca,
-                // $item->total_emoji,
-                $item->total_kata,
-                $item->rata2_kata,
-                $item->total_karakter,
-                $item->rata2_karakter,
-                $item->TF_IDF,
-            ];
-=======
             $data = [];
 
             if ($request->follower) {
@@ -194,7 +148,6 @@ class KNNController extends Controller
                 $data[] = $item->TF_IDF;
             }
 
->>>>>>> 2f44bde8c78d2d1e285f2472c2c5c82bac85b9a5
             $predict = $classifier->predict([$data]);
             $item->kelas_prediksi = $predict[0];
             $hasil[] = $predict;
