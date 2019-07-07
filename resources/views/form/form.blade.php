@@ -135,8 +135,10 @@
                 {{--</div>--}}
             {{--</div>--}}
 
-
-
+            <div class="card" style="margin-top: 3%;">
+            <a class="btn btn-primary" data-toggle="collapse" href="#multiCollapseExample1" role="button" aria-expanded="false" aria-controls="multiCollapseExample1">Tampilan Data</a>
+            </div>
+            <div class="collapse" id="multiCollapseExample1">
             <table class="table">
                 <table class="table">
                     <thead class="thead-light">
@@ -166,6 +168,7 @@
 
                 </table>
             </table>
+            </div>
             <div class="row" style="margin-top:10px;">
                 <div class="col-md-12">
                     <!-- About Me Box -->
