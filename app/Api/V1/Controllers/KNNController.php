@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 use App\Result;
 use App\SettingTest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Phpml\Classification\KNearestNeighbors;
 use Phpml\Classification\Linear\LogisticRegression;
 use Phpml\Metric\Accuracy;
@@ -26,6 +27,11 @@ class KNNController extends Controller
 {
     public function knn(Request $request)
     {
+
+//        Log::info($request);
+        if($request->follower=='true'){
+            Log::info($request->follower);
+        }
 
         $classifier = new KNearestNeighbors($request->nilai_k);
 //        $logistic = new LogisticRegression();
@@ -45,51 +51,52 @@ class KNNController extends Controller
 
             $data = [];
 
-            if ($request->follower) {
+            if ($request->follower=='true') {
                 $data[] = $item->total_follower;
             }
-            if ($request->following) {
+            if ($request->following=='true') {
                 $data[] = $item->total_following;
             }
-            if ($request->media_url) {
+            if ($request->total_media_url=='true') {
                 $data[] = $item->total_media_url;
             }
-            if ($request->url) {
+            if ($request->total_url=='true') {
                 $data[] = $item->total_url;
             }
-            if ($request->mention) {
+            if ($request->total_mention=='true') {
                 $data[] = $item->total_mention;
             }
-            if ($request->RT) {
+            if ($request->total_RT=='true') {
                 $data[] = $item->total_RT;
             }
-            if ($request->hashtag) {
+            if ($request->total_hashtag=='true') {
                 $data[] = $item->total_hashtag;
             }
-            if ($request->huruf_besar) {
+            if ($request->total_huruf_besar=='true') {
                 $data[] = $item->total_huruf_besar;
             }
-            if ($request->tanda_baca) {
+            if ($request->total_tanda_baca=='true') {
                 $data[] = $item->total_tanda_baca;
             }
-            if ($request->emoji) {
+            if ($request->total_emoji=='true') {
                 $data[] = $item->total_emoji;
             }
-            if ($request->kata) {
+            if ($request->total_kata=='true') {
                 $data[] = $item->total_kata;
             }
-            if ($request->rata2_kata) {
+            if ($request->rata2_kata=='true') {
                 $data[] = $item->rata2_kata;
             }
-            if ($request->karakter) {
+            if ($request->total_karakter=='true') {
                 $data[] = $item->total_karakter;
             }
-            if ($request->rata2_karakter) {
+            if ($request->rata2_karakter=='true') {
                 $data[] = $item->rata2_karakter;
             }
-            if ($request->TF_IDF) {
+            if ($request->TF_IDF=='true') {
                 $data[] = $item->TF_IDF;
             }
+//            Log::info($data);
 
             $label = $item->kelas_asli;
             $datatest[] = $data;
@@ -102,52 +109,53 @@ class KNNController extends Controller
         foreach ($datauji as $item) {
             $data = [];
 
-            if ($request->follower) {
+            if ($request->follower=='true') {
                 $data[] = $item->total_follower;
             }
-            if ($request->following) {
+            if ($request->following=='true') {
                 $data[] = $item->total_following;
             }
-            if ($request->media_url) {
+            if ($request->total_media_url=='true') {
                 $data[] = $item->total_media_url;
             }
-            if ($request->url) {
+            if ($request->total_url=='true') {
                 $data[] = $item->total_url;
             }
-            if ($request->mention) {
+            if ($request->total_mention=='true') {
                 $data[] = $item->total_mention;
             }
-            if ($request->RT) {
+            if ($request->total_RT=='true') {
                 $data[] = $item->total_RT;
             }
-            if ($request->hashtag) {
+            if ($request->total_hashtag=='true') {
                 $data[] = $item->total_hashtag;
             }
-            if ($request->huruf_besar) {
+            if ($request->total_huruf_besar=='true') {
                 $data[] = $item->total_huruf_besar;
             }
-            if ($request->tanda_baca) {
+            if ($request->total_tanda_baca=='true') {
                 $data[] = $item->total_tanda_baca;
             }
-            if ($request->emoji) {
+            if ($request->total_emoji=='true') {
                 $data[] = $item->total_emoji;
             }
-            if ($request->kata) {
+            if ($request->total_kata=='true') {
                 $data[] = $item->total_kata;
             }
-            if ($request->rata2_kata) {
+            if ($request->rata2_kata=='true') {
                 $data[] = $item->rata2_kata;
             }
-            if ($request->karakter) {
+            if ($request->total_karakter=='true') {
                 $data[] = $item->total_karakter;
             }
-            if ($request->rata2_karakter) {
+            if ($request->rata2_karakter=='true') {
                 $data[] = $item->rata2_karakter;
             }
-            if ($request->TF_IDF) {
+            if ($request->TF_IDF=='true') {
                 $data[] = $item->TF_IDF;
             }
 
+            Log::info($data);
             $predict = $classifier->predict([$data]);
             $item->kelas_prediksi = $predict[0];
             $hasil[] = $predict;
