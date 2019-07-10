@@ -1,12 +1,12 @@
 <html>
 <head>
-    <title> From </title>
+    <title> Make A K-Nearest neighbor </title>
 
 </head>
 <body>
 <div class="container" style="margin-top:2%; margin-bottom: 2%;">
     <div class="card">
-        <div class="card-header">Form</div>
+        <div class="card-header">Make A K-Nearest neighbor</div>
         <div class="card-body">
             <div class="row">
 
@@ -115,8 +115,7 @@
                         </div>
                     </div>
                     <br>
-                    <button class="btn btn-primary" style="margin-left: 5%;" onclick="handleClick(this);">Latih
-                        Dan Uji
+                    <button class="btn btn-primary" style="margin-left: 5%;" onclick="handleClick(this);">Make a K-NN
                     </button>
                 </div>
 
